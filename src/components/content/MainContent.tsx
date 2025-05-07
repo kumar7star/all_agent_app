@@ -1,136 +1,43 @@
 import React from 'react';
-import { Box, Typography, Paper, Grid, Card, CardContent, CardHeader, Button, Divider } from '@mui/material';
+import { CardItem } from '../layout/Dashboard';
 
 interface MainContentProps {
   activeTab: string;
-  activeMenuItem: string;
 }
 
-const MainContent: React.FC<MainContentProps> = ({ activeTab, activeMenuItem }) => {
+const MainContent: React.FC<MainContentProps> = ({ activeTab }) => {
+  // Sample cards for the grid
+  const cards: CardItem[] = [
+    { id: 'card1', title: 'Create New Project', subtitle: 'Start a fresh project from scratch' },
+    { id: 'card2', title: 'Analyze Data', subtitle: 'Review and analyze your data' },
+    { id: 'card3', title: 'Manage Team', subtitle: 'Add or remove team members' },
+    { id: 'card4', title: 'Generate Report', subtitle: 'Create detailed reports' },
+    { id: 'card5', title: 'Schedule Meeting', subtitle: 'Set up team meetings' },
+    { id: 'card6', title: 'View Statistics', subtitle: 'Check your performance metrics' },
+  ];
+
   return (
-    <Box
-      sx={{
-        flexGrow: 1,
-        padding: 3,
-        overflow: 'auto',
-        backgroundColor: (theme) => theme.palette.grey[100],
-      }}
-    >
-      <Typography variant="h4" gutterBottom>
-        {activeTab.charAt(0).toUpperCase() + activeTab.slice(1)} / {activeMenuItem.charAt(0).toUpperCase() + activeMenuItem.slice(1)}
-      </Typography>
-      
-      <Grid container spacing={3}>
-        {/* Task Options Section */}
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2, mb: 3 }}>
-            <Typography variant="h6" gutterBottom>
-              Task Options
-            </Typography>
-            <Divider sx={{ mb: 2 }} />
-            <Grid container spacing={2}>
-              <Grid item>
-                <Button variant="contained" color="primary">
-                  Create New Task
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button variant="outlined">
-                  Import Tasks
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button variant="outlined">
-                  Export Data
-                </Button>
-              </Grid>
-              <Grid item>
-                <Button variant="outlined">
-                  Generate Report
-                </Button>
-              </Grid>
-            </Grid>
-          </Paper>
-        </Grid>
+    <div className="flex-grow p-8 overflow-y-auto">
+      <div className="max-w-4xl mx-auto flex flex-col items-center">
+        {/* Gradient orb icon centered at the top */}
+        <div className="gradient-orb w-16 h-16 mb-6"></div>
         
-        {/* Task Cards */}
-        <Grid item xs={12} md={6} lg={4}>
-          <Card>
-            <CardHeader title="Pending Tasks" />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                You have 5 pending tasks that require your attention.
-              </Typography>
-              <Button sx={{ mt: 2 }} size="small">
-                View All
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
+        {/* Heading */}
+        <h1 className="text-2xl font-semibold text-gray-800 mb-8">
+          What you want to do today?
+        </h1>
         
-        <Grid item xs={12} md={6} lg={4}>
-          <Card>
-            <CardHeader title="In Progress" />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                3 tasks are currently in progress.
-              </Typography>
-              <Button sx={{ mt: 2 }} size="small">
-                View All
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-        
-        <Grid item xs={12} md={6} lg={4}>
-          <Card>
-            <CardHeader title="Completed" />
-            <CardContent>
-              <Typography variant="body2" color="text.secondary">
-                12 tasks have been completed this week.
-              </Typography>
-              <Button sx={{ mt: 2 }} size="small">
-                View All
-              </Button>
-            </CardContent>
-          </Card>
-        </Grid>
-        
-        {/* Recent Activity */}
-        <Grid item xs={12}>
-          <Paper sx={{ p: 2 }}>
-            <Typography variant="h6" gutterBottom>
-              Recent Activity
-            </Typography>
-            <Divider sx={{ mb: 2 }} />
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="body1">
-                Task "Update user documentation" was completed by John Doe
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                Today at 2:30 PM
-              </Typography>
-            </Box>
-            <Box sx={{ mb: 2 }}>
-              <Typography variant="body1">
-                New task "Implement API authentication" was assigned to you
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                Today at 11:15 AM
-              </Typography>
-            </Box>
-            <Box>
-              <Typography variant="body1">
-                You commented on "Fix navigation bug in mobile view"
-              </Typography>
-              <Typography variant="caption" color="text.secondary">
-                Yesterday at 4:45 PM
-              </Typography>
-            </Box>
-          </Paper>
-        </Grid>
-      </Grid>
-    </Box>
+        {/* Grid of 6 interactive cards (2 rows x 3 columns) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full">
+          {cards.map((card) => (
+            <div key={card.id} className="card">
+              <h3 className="text-lg font-medium text-gray-800">{card.title}</h3>
+              <p className="text-sm text-gray-500 mt-1">{card.subtitle}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 

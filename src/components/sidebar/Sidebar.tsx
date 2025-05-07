@@ -1,124 +1,39 @@
 import React from 'react';
-import {
-  Box,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemIcon,
-  ListItemText,
-  IconButton,
-  Divider,
-  useTheme,
-  Typography,
-} from '@mui/material';
-import {
-  ChevronLeft as ChevronLeftIcon,
-  ChevronRight as ChevronRightIcon,
-  Dashboard as DashboardIcon,
-  Assignment as AssignmentIcon,
-  Settings as SettingsIcon,
-  Analytics as AnalyticsIcon,
-  People as PeopleIcon,
-} from '@mui/icons-material';
-import { MenuItem } from '../layout/Dashboard';
+import { Home, FileText, Settings, Users, BarChart2, Search } from 'lucide-react';
 
-interface SidebarProps {
-  open: boolean;
-  onToggle: () => void;
-  activeMenuItem: string;
-  onMenuItemSelect: (id: string) => void;
-}
-
-const DRAWER_WIDTH = 240;
-
-const menuItems: MenuItem[] = [
-  { id: 'home', label: 'Home', icon: <DashboardIcon /> },
-  { id: 'tasks', label: 'Tasks', icon: <AssignmentIcon /> },
-  { id: 'analytics', label: 'Analytics', icon: <AnalyticsIcon /> },
-  { id: 'team', label: 'Team', icon: <PeopleIcon /> },
-  { id: 'settings', label: 'Settings', icon: <SettingsIcon /> },
-];
-
-const Sidebar: React.FC<SidebarProps> = ({
-  open,
-  onToggle,
-  activeMenuItem,
-  onMenuItemSelect,
-}) => {
-  const theme = useTheme();
+const Sidebar: React.FC = () => {
+  const navItems = [
+    { id: 'home', icon: <Home size={24} />, label: 'Home' },
+    { id: 'tasks', icon: <FileText size={24} />, label: 'Tasks' },
+    { id: 'analytics', icon: <BarChart2 size={24} />, label: 'Analytics' },
+    { id: 'users', icon: <Users size={24} />, label: 'Users' },
+    { id: 'search', icon: <Search size={24} />, label: 'Search' },
+    { id: 'settings', icon: <Settings size={24} />, label: 'Settings' },
+  ];
 
   return (
-    <Drawer
-      variant="permanent"
-      sx={{
-        width: open ? DRAWER_WIDTH : theme.spacing(7),
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
-          width: open ? DRAWER_WIDTH : theme.spacing(7),
-          boxSizing: 'border-box',
-          overflowX: 'hidden',
-          transition: theme.transitions.create('width', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-          }),
-        },
-      }}
-      open={open}
-    >
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: open ? 'space-between' : 'center',
-          padding: theme.spacing(0, 1),
-          ...theme.mixins.toolbar,
-        }}
-      >
-        {open && (
-          <Typography variant="h6" noWrap component="div" sx={{ ml: 2 }}>
-            Agent App
-          </Typography>
-        )}
-        <IconButton onClick={onToggle}>
-          {open ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-        </IconButton>
-      </Box>
-      <Divider />
-      <List>
-        {menuItems.map((item) => (
-          <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? 'initial' : 'center',
-                px: 2.5,
-                backgroundColor: activeMenuItem === item.id ? 'rgba(0, 0, 0, 0.08)' : 'transparent',
-              }}
-              onClick={() => onMenuItemSelect(item.id)}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : 'auto',
-                  justifyContent: 'center',
-                  color: activeMenuItem === item.id ? theme.palette.primary.main : 'inherit',
-                }}
-              >
-                {item.icon}
-              </ListItemIcon>
-              <ListItemText 
-                primary={item.label} 
-                sx={{ 
-                  opacity: open ? 1 : 0,
-                  color: activeMenuItem === item.id ? theme.palette.primary.main : 'inherit',
-                }} 
-              />
-            </ListItemButton>
-          </ListItem>
+    <div className="w-20 h-full bg-white border-r border-gray-200 flex flex-col items-center py-6">
+      {/* Logo (circular gradient orb) */}
+      <div className="gradient-orb w-12 h-12 flex items-center justify-center mb-2">
+        <span className="text-white font-bold text-xl">N</span>
+      </div>
+      
+      {/* Brand name */}
+      <div className="text-xs font-semibold text-gray-700 mb-8">Norgren</div>
+      
+      {/* Navigation icons (vertical stack) */}
+      <nav className="flex flex-col items-center space-y-6 mt-4">
+        {navItems.map((item) => (
+          <button
+            key={item.id}
+            className="w-12 h-12 flex flex-col items-center justify-center text-gray-500 hover:text-blue-600 transition-colors"
+          >
+            {item.icon}
+            <span className="text-xs mt-1">{item.label}</span>
+          </button>
         ))}
-      </List>
-    </Drawer>
+      </nav>
+    </div>
   );
 };
 

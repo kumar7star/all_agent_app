@@ -1,100 +1,75 @@
 import React, { useState } from 'react';
-import { Box, CssBaseline, useMediaQuery, useTheme } from '@mui/material';
 import Sidebar from '../sidebar/Sidebar';
 import TopTabs from '../tabs/TopTabs';
 import MainContent from '../content/MainContent';
-import AssistantPanel from '../assistant/AssistantPanel';
+import AgentPanel from '../assistant/AgentPanel';
 
-// Define tab interfaces
+// Define tab interface
 export interface TabItem {
   id: string;
   label: string;
+  closable?: boolean;
 }
 
-// Define sidebar menu item interface
-export interface MenuItem {
+// Define card interface for main content
+export interface CardItem {
   id: string;
-  label: string;
-  icon: React.ReactNode;
+  title: string;
+  subtitle: string;
 }
 
 const Dashboard: React.FC = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-  
-  // State for sidebar open/close on mobile
-  const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
-  
   // State for active tab
-  const [activeTab, setActiveTab] = useState('dashboard');
-  
-  // State for active menu item
-  const [activeMenuItem, setActiveMenuItem] = useState('home');
-  
-  // State for assistant panel open/close
-  const [assistantOpen, setAssistantOpen] = useState(!isMobile);
+  const [tabs, setTabs] = useState<TabItem[]>([
+    { id: 'new-task', label: 'New Task', closable: true }
+  ]);
+  const [activeTab, setActiveTab] = useState('new-task');
 
-  // Handle sidebar toggle
-  const handleSidebarToggle = () => {
-    setSidebarOpen(!sidebarOpen);
+  // Handle adding a new tab
+  const handleAddTab = () => {
+    const newTabId = `tab-${tabs.length + 1}`;
+    const newTab = { id: newTabId, label: `Tab ${tabs.length + 1}`, closable: true };
+    setTabs([...tabs, newTab]);
+    setActiveTab(newTabId);
   };
 
-  // Handle assistant panel toggle
-  const handleAssistantToggle = () => {
-    setAssistantOpen(!assistantOpen);
+  // Handle closing a tab
+  const handleCloseTab = (tabId: string) => {
+    const newTabs = tabs.filter(tab => tab.id !== tabId);
+    setTabs(newTabs);
+    
+    // If the active tab was closed, set the first available tab as active
+    if (activeTab === tabId && newTabs.length > 0) {
+      setActiveTab(newTabs[0].id);
+    }
   };
 
   return (
-    <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
-      <CssBaseline />
-      
-      {/* Left Sidebar Navigation */}
-      <Sidebar 
-        open={sidebarOpen} 
-        onToggle={handleSidebarToggle}
-        activeMenuItem={activeMenuItem}
-        onMenuItemSelect={setActiveMenuItem}
-      />
+    <div className="flex h-full w-full bg-gray-50">
+      {/* Left Sidebar - Fixed width */}
+      <Sidebar />
       
       {/* Main Content Area */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          height: '100vh',
-          overflow: 'hidden',
-        }}
-      >
-        {/* Top Tab Navigation */}
+      <div className="flex flex-col flex-grow overflow-hidden">
+        {/* Top Navigation Tabs */}
         <TopTabs 
+          tabs={tabs}
           activeTab={activeTab}
           onTabChange={setActiveTab}
+          onAddTab={handleAddTab}
+          onCloseTab={handleCloseTab}
         />
         
         {/* Content Area */}
-        <Box
-          sx={{
-            display: 'flex',
-            flexGrow: 1,
-            overflow: 'hidden',
-          }}
-        >
-          {/* Main Content with Task Options */}
-          <MainContent 
-            activeTab={activeTab}
-            activeMenuItem={activeMenuItem}
-          />
+        <div className="flex flex-grow overflow-hidden">
+          {/* Main Content */}
+          <MainContent activeTab={activeTab} />
           
-          {/* Right Assistant Panel with Interaction Tools */}
-          <AssistantPanel 
-            open={assistantOpen}
-            onToggle={handleAssistantToggle}
-          />
-        </Box>
-      </Box>
-    </Box>
+          {/* Agent Panel */}
+          <AgentPanel />
+        </div>
+      </div>
+    </div>
   );
 };
 
