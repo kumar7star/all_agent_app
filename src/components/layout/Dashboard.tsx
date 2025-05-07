@@ -48,7 +48,7 @@ const Dashboard: React.FC = () => {
     <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
       <CssBaseline />
       
-      {/* Left Sidebar */}
+      {/* Left Sidebar Navigation */}
       <Sidebar 
         open={sidebarOpen} 
         onToggle={handleSidebarToggle}
@@ -67,7 +67,7 @@ const Dashboard: React.FC = () => {
           overflow: 'hidden',
         }}
       >
-        {/* Top Tabs */}
+        {/* Top Tab Navigation */}
         <TopTabs 
           activeTab={activeTab}
           onTabChange={setActiveTab}
@@ -81,13 +81,13 @@ const Dashboard: React.FC = () => {
             overflow: 'hidden',
           }}
         >
-          {/* Main Content */}
+          {/* Main Content with Task Options */}
           <MainContent 
             activeTab={activeTab}
             activeMenuItem={activeMenuItem}
           />
           
-          {/* Right Assistant Panel */}
+          {/* Right Assistant Panel with Interaction Tools */}
           <AssistantPanel 
             open={assistantOpen}
             onToggle={handleAssistantToggle}
