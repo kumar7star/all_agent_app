@@ -12,25 +12,30 @@ const Sidebar: React.FC = () => {
   ];
 
   return (
-    <div className="w-20 h-full bg-white border-r border-gray-200 flex flex-col items-center py-6">
+    <div className="w-20 h-full bg-gray-900 text-gray-100 flex flex-col items-center py-6">
       {/* Logo (circular gradient orb) */}
       <div className="gradient-orb w-12 h-12 flex items-center justify-center mb-2">
         <span className="text-white font-bold text-xl">N</span>
       </div>
       
       {/* Brand name */}
-      <div className="text-xs font-semibold text-gray-700 mb-8">Norgren</div>
+      <div className="text-xs font-semibold text-gray-300 mb-8">Norgren</div>
       
       {/* Navigation icons (vertical stack) */}
       <nav className="flex flex-col items-center space-y-6 mt-4">
         {navItems.map((item) => (
-          <button
-            key={item.id}
-            className="w-12 h-12 flex flex-col items-center justify-center text-gray-500 hover:text-blue-600 transition-colors"
-          >
-            {item.icon}
-            <span className="text-xs mt-1">{item.label}</span>
-          </button>
+          <div key={item.id} className="has-tooltip">
+            <button
+              className="w-12 h-12 flex flex-col items-center justify-center text-gray-300 hover:text-blue-400 transition-colors"
+              onClick={() => console.log(`${item.label} clicked`)}
+            >
+              {item.icon}
+              <span className="text-xs mt-1">{item.label}</span>
+            </button>
+            <div className="tooltip rounded-xl bg-gray-800 p-2 text-xs text-white -right-20 w-24 text-center">
+              {item.label}
+            </div>
+          </div>
         ))}
       </nav>
     </div>

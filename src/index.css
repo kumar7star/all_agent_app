@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,10 +7,11 @@
 @layer base {
   html, body, #root {
     @apply h-full overflow-hidden;
+    font-family: 'Inter', sans-serif;
   }
   
   body {
-    @apply m-0 font-sans antialiased;
+    @apply m-0 antialiased;
   }
 }
 
@@ -19,6 +22,18 @@
   
   .card {
     @apply bg-white rounded-lg p-4 shadow transition-all duration-200 hover:shadow-md hover:-translate-y-1 cursor-pointer;
+  }
+  
+  .tooltip {
+    @apply invisible absolute;
+  }
+  
+  .has-tooltip:hover .tooltip {
+    @apply visible z-50;
+  }
+  
+  .assistant-chip {
+    @apply bg-gray-800 hover:bg-gray-700 text-gray-100 px-3 py-2 rounded-xl text-sm font-medium shadow-md hover:shadow-lg transition-all;
   }
 }
 
